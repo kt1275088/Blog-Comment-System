@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Comment System</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #E8EBE4;
+    color: #798071;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .comment-section {
+    max-width: 600px;
+    background-color: #D2D5DD;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .comment {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #999AC6;
+    padding-bottom: 10px;
+  }
+
+  .comment .content {
+    margin-bottom: 10px;
+  }
+
+  .comment .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .comment .actions button {
+    background-color: #999AC6;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .comment .actions button:hover {
+    background-color: #798071;
+  }
+
+  .reply-form {
+    margin-top: 10px;
+  }
+
+  .reply-form textarea {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #999AC6;
+    border-radius: 5px;
+  }
+
+  .reply-form button {
+    background-color: #999AC6;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .reply-form button:hover {
+    background-color: #798071;
+  }
+</style>
+</head>
+<body>
+
+<div class="comment-section">
+  <h2>Comments</h2>
+
+  <div class="comment">
+    <div class="content">
+      <p>This is the first comment.</p>
+    </div>
+    <div class="actions">
+      <button class="upvote-btn">Upvote</button>
+      <button class="reply-btn">Reply</button>
+    </div>
+    <div class="reply-form" style="display: none;">
+      <textarea placeholder="Write your reply..."></textarea>
+      <button class="submit-reply-btn">Submit</button>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="content">
+      <p>This is a reply to the first comment.</p>
+    </div>
+    <div class="actions">
+      <button class="upvote-btn">Upvote</button>
+      <button class="reply-btn">Reply</button>
+    </div>
+    <div class="reply-form" style="display: none;">
+      <textarea placeholder="Write your reply..."></textarea>
+      <button class="submit-reply-btn">Submit</button>
+    </div>
+  </div>
+
+  <div class="reply-form">
+    <textarea placeholder="Write your comment..."></textarea>
+    <button class="submit-comment-btn">Submit</button>
+  </div>
+</div>
+
+<script>
+  // Function to toggle reply form visibility
+  function toggleReplyForm(event) {
+    const replyForm = event.target.parentElement.nextElementSibling;
+    replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // Function to handle comment submission
+  function handleCommentSubmit(event) {
+    event.preventDefault();
+    const commentContent = event.target.parentElement.querySelector('textarea').value;
+    if (commentContent.trim() === '') return;
+    const comment = document.createElement('div');
+    comment.classList.add('comment');
+    comment.innerHTML = `
+      <div class="content">
+        <p>${commentContent}</p>
+      </div>
+      <div class="actions">
+        <button class="upvote-btn">Upvote</button>
+        <button class="reply-btn">Reply</button>
+      </div>
+      <div class="reply-form" style="display: none;">
+        <textarea placeholder="Write your reply..."></textarea>
+        <button class="submit-reply-btn">Submit</button>
+      </div>
+    `;
+    event.target.parentElement.before(comment);
+    event.target.parentElement.querySelector('textarea').value = '';
+  }
+
+  // Attach event listeners
+  document.querySelectorAll('.reply-btn').forEach(btn => {
+    btn.addEventListener('click', toggleReplyForm);
+  });
+
+  document.querySelectorAll('.submit-comment-btn').forEach(btn => {
+    btn.addEventListener('click', handleCommentSubmit);
+  });
+</script>
+
+</body>
+</html>
